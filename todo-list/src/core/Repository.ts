@@ -5,17 +5,17 @@ export class Repository {
 	}
 
 	get(key: string) {
-		const item = this.storage.getItem(key);
+		const data = this.storage.getItem(key);
 
-		if (!item) {
+		if (!data) {
 			return [];
 		}
 
-		return JSON.parse(item);
+		return JSON.parse(data);
 	}
 
-	set(key: string, item: object) {
-		this.storage.setItem(key, JSON.stringify(item));
+	set(key: string, data: object) {
+		this.storage.setItem(key, JSON.stringify(data));
 	}
 
 	remove(key: string) {

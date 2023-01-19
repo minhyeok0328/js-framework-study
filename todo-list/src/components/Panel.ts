@@ -1,10 +1,12 @@
+export interface TodoList {
+	text: string;
+	idx: number;
+}
 
-
-export default function Panel() {
+export default function Panel({ text, idx }: TodoList) {
 	return `
-		<article class="panel">
-			<input type="checkbox" />
-			<p>asddasfasddasfasddasf</p>
+		<article class="panel" data-idx="${idx}">
+			<p>${text}</p>
 			<button type="button">수정</button>
 			<button type="button">삭제</button>
 		</article>

@@ -1,11 +1,29 @@
 import { Repository } from '@/core/Repository';
-import Panel from '@/components/Panel';
+import Panel, { TodoList } from '@/components/Panel';
 import PageTitle from '@/components/PageTitle';
-import {addEvent} from "@/core/render";
+import { addEvent } from '@/core/render';
+import { selector } from "@/utils";
 
 export default function App() {
 	const repository = new Repository();
-	console.log(repository);
+	const todoList = repository.get('todo');
+
+	function addTodoList() {
+		const $input = selector<HTMLInputElement>('[name="todoList"]');
+
+		todoList.push({
+			text: $input.value,
+			idx: new Date().getTime(),
+		});
+
+		repository.set('todo', todoList);
+
+		$input.value = '';
+	}
+
+	addEvent('click', '.add', () => {
+		addTodoList();
+	});
 
 	return `
     <main class="main">
@@ -15,12 +33,12 @@ export default function App() {
 					subTitle: '2023년 01월 18일',
 				})}
     		<nav>
-    			<input type="text" />
+    			<input type="text" name="todoList" />
     			<button type="button" class="add">일정 추가</button>
     		</nav>
 			</header>
 			<section class="content">
-				${Panel()}
+				${todoList.map((item: TodoList) => Panel(item)).join('')}
 			</section>
     </main>
   `;
