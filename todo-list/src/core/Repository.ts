@@ -1,3 +1,5 @@
+import { _render } from '@/core/render';
+
 export class Repository {
 	private storage: Storage;
 	constructor(storage: Storage = localStorage) {
@@ -16,9 +18,11 @@ export class Repository {
 
 	set(key: string, data: object) {
 		this.storage.setItem(key, JSON.stringify(data));
+		_render();
 	}
 
 	remove(key: string) {
 		this.storage.removeItem(key);
+		_render();
 	}
 }
